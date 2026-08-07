@@ -1,13 +1,14 @@
 ---
-title: 4.3 GroupC1 Capstone
-emoji: 🌍
-colorFrom: pink
-colorTo: indigo
+title: 4.3 - Group C1 - Capstone Project
+emoji: 🚀
+colorFrom: red
+colorTo: yellow
 sdk: gradio
-sdk_version: 6.22.0
+sdk_version: '6.20.0'
 python_version: '3.13'
 app_file: app.py
 pinned: false
+short_description: KWK AI/ML Capstone · Camp 4.3 · Group C1 · Summer 2026
 ---
 
-Check out the configuration reference at https://huggingface.co/docs/hub/spaces-config-reference
+This Space was created for the KWK AI/ML capstone project. Happy building!
