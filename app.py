@@ -1,6 +1,11 @@
 import gradio as gr
 from huggingface_hub import InferenceClient
 
+!pip install -q sentence-transformers
+from sentence_transformers import SentenceTransformer
+import torch
+
+
 # This is the same pattern from the Generative AI lesson! It uses the
 # Inference Provider API to send your messages to an AI model and get
 # a response back. Swap out the model below for a different one if
@@ -12,9 +17,6 @@ from huggingface_hub import InferenceClient
 
 client = InferenceClient("Qwen/Qwen2.5-7B-Instruct", bill_to="kode-with-klossy")
 
-!pip install -q sentence-transformers
-from sentence_transformers import SentenceTransformer
-import torch
 
 with open("assist_ai_database1.txt", "r", encoding="utf-8") as file:
     assist_ai_database1_text = file.read()
