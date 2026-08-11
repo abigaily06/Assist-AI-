@@ -12,6 +12,10 @@ from huggingface_hub import InferenceClient
 
 client = InferenceClient("Qwen/Qwen2.5-7B-Instruct", bill_to="kode-with-klossy")
 
+with open("study_schedule_dataset.txt", "r", encoding="utf-8") as file:
+        schedule_text = file.read()
+    cleaned_chunks = preprocess_text(schedule_text)
+
 
 def respond(message, history):
     messages = [{"role": "system", "content": "You are a chatbot designed to help students create a study schedule to reduce the amount of stress they expereince during the school year. Firstly, ask the students what subjects they take, their current grade in each, then the grade that they want to acheive. Please ask the student when they next assignment/exam/test is for their chosen subjects. Then ask what commitments do they have outside of school e.g. clubs, chores ect."}]
