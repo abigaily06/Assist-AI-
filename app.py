@@ -1,7 +1,5 @@
 import gradio as gr
 from huggingface_hub import InferenceClient
-
-!pip install -q sentence-transformers
 from sentence_transformers import SentenceTransformer
 import torch
 
