@@ -74,7 +74,7 @@ def get_top_chunks(query, chunk_embeddings, text_chunks):
     chunk = text_chunks[i]
     top_chunks.append(chunk)
 
-return top_chunks
+  return top_chunks
 
 
 
