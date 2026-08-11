@@ -112,7 +112,6 @@ When creating the schedule:
 - Make the schedule clear and easy to follow
 
 Use the following relevant information retrieved from the study database: {study_context} Use the database information as guidance when creating your response. Do not mention the database, RAG, embeddings, or retrieved chunks to the student. If you do not yet have enough information to create a useful schedule, continue asking the student for the missing information instead of making up details.
-"""
 """}]
 
     if history:
