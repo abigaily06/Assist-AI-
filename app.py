@@ -34,9 +34,60 @@ def preprocess_text(text):
 
     return cleaned_chunks
 
+cleaned_chunks = preprocess_text(assist_ai_database1_text)
+
+print(cleaned_chunks)
+
+# Load the pre-trained embedding model that converts text to vectors
+
+model = SentenceTransformer("all-MiniLM-L6-v2")
+
+
+def create_embeddings(text_chunks):
+    chunk_embeddings = model.encode(text_chunks, convert_to_tensor=True)
+
+    return chunk_embeddings
+
+
+chunk_embeddings = create_embeddings(cleaned_chunks)
+
+print(chunk_embeddings.shape)
+
+
+chunk_embeddings = create_embeddings(cleaned_chunks) 
+
+def get_top_chunks(query, chunk_embeddings, text_chunks):
+  
+  query_embedding = model.encode(query, convert_to_tensor=True)
+
+  query_embedding_normalized = query_embedding / query_embedding.norm()
+
+  chunk_embeddings_normalized = chunk_embeddings / chunk_embeddings.norm(dim=1, keepdim=True)
+
+  similarities = torch.matmul(chunk_embeddings_normalized, query_embedding_normalized) 
+
+  print(similarities)
+
+  top_indices = torch.topk(similarities, k=3).indices
+
+  top_chunks = []
+
+  for i in top_indices:
+    chunk = text_chunks[i]
+    top_chunks.append(chunk)
+
+return top_chunks
+
+top_results = get_top_chunks("I have an exam soon and I need to revise", chunk_embeddings, cleaned_chunks)
+
+print(top_results)
+
+study_context = "\n".join(top_results)
+
 
 def respond(message, history):
-    messages = [{"role": "system", "content": "You are a chatbot designed to help students create a study schedule to reduce the amount of stress they expereince during the school year. Firstly, ask the students what subjects they take, their current grade in each, then the grade that they want to acheive. Please ask the student when they next assignment/exam/test is for their chosen subjects. Then ask what commitments do they have outside of school e.g. clubs, chores ect."}]
+    messages = [{"role": "system", "content": f""" "You are a chatbot designed to help students create a study schedule to reduce the amount of stress they expereince during the school year. Firstly, ask the students what subjects they take, their current grade in each, then the grade that they want to acheive. Please ask the student when they next assignment/exam/test is for their chosen subjects. Then ask what commitments do they have outside of school e.g. clubs, chores ect. Use the following information from the study database to help you create suitable study schedules: {study_context}
+"""}]
 
     if history:
         messages.extend(history)
