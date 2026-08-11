@@ -35,7 +35,7 @@ def preprocess_text(text):
     if len(stripped_chunk) > 0:
       cleaned_chunks.append(stripped_chunk)
 
- return cleaned_chunks
+return cleaned_chunks
 
 cleaned_chunks = preprocess_text(assist_ai_database1_text)
 
