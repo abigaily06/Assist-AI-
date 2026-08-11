@@ -12,9 +12,10 @@ from huggingface_hub import InferenceClient
 
 client = InferenceClient("Qwen/Qwen2.5-7B-Instruct", bill_to="kode-with-klossy")
 
-with open("study_schedule_dataset.txt", "r", encoding="utf-8") as file:
-        schedule_text = file.read()
-    cleaned_chunks = preprocess_text(schedule_text)
+with open("assist_ai_dataset1.txt", "r", encoding="utf-8") as file:
+        assist_ai_dataset1_text = file.read()
+    print(assist_ai_dataset1_text)
+
 
 
 def respond(message, history):
