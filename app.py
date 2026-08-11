@@ -39,9 +39,16 @@ def respond(message, history):
 
     return response.choices[0].message.content.strip()
 
-chatbot = gr.ChatInterface(respond)
+with gr.Blocks() as dashboard:
 
-chatbot.launch()
+    gr.Markdown("# Good morning, Scholar!")
+    gr.Markdown("Let's make today productive.")
+
+    with gr.Row():
+        with gr.Column():
+            chatbot = gr.ChatInterface(respond)
+
+dashboard.launch()
 
 
 # TODO: This is just a starting point! Customize the system prompt,!
