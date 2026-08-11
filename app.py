@@ -60,6 +60,10 @@ with gr.Blocks() as dashboard:
         with gr.Column():
             chatbot = gr.ChatInterface(respond)
 
+        with gr.Column():
+            gr.Markdown("## Today's Schedule")
+            gr.Markdown("## Pomodoro Timer")
+
 dashboard.launch()
 
 
