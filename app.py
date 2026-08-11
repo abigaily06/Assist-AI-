@@ -13,8 +13,8 @@ from huggingface_hub import InferenceClient
 client = InferenceClient("Qwen/Qwen2.5-7B-Instruct", bill_to="kode-with-klossy")
 
 with open("assist_ai_database1.txt", "r", encoding="utf-8") as file:
-        assist_ai_database1_text = file.read()
-    print(assist_ai_database1_text)
+    assist_ai_database1_text = file.read()
+print(assist_ai_database1_text)
 
 
 
