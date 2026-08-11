@@ -21,25 +21,18 @@ with open("assist_ai_database1.txt", "r", encoding="utf-8") as file:
 print(assist_ai_database1_text)
 
 def preprocess_text(text):
- 
-  cleaned_text = text.strip()
+    cleaned_text = text.strip()
+    chunks = cleaned_text.split("\n")
 
-  chunks = cleaned_text.split("\n")
+    cleaned_chunks = []
 
+    for chunk in chunks:
+        stripped_chunk = chunk.strip()
 
-  cleaned_chunks = []
+        if len(stripped_chunk) > 0:
+            cleaned_chunks.append(stripped_chunk)
 
-  for chunk in chunks:
-    stripped_chunk = chunk.strip()
-      
-    if len(stripped_chunk) > 0:
-      cleaned_chunks.append(stripped_chunk)
-
-return cleaned_chunks
-
-cleaned_chunks = preprocess_text(assist_ai_database1_text)
-
-print(cleaned_chunks)
+    return cleaned_chunks
 
 
 def respond(message, history):
