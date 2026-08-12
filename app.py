@@ -110,6 +110,7 @@ When creating the schedule:
 - Avoid overwhelming the student with too many study sessions
 - Give specific study times and subjects
 - Make the schedule clear and easy to follow
+- Be sure to use relevant characters fetched from the database, if user query is in english, maintain usage of english language. 
 
 Use the following relevant information retrieved from the study database: {study_context} Use the database information as guidance when creating your response. Do not mention the database, RAG, embeddings, or retrieved chunks to the student. If you do not yet have enough information to create a useful schedule, continue asking the student for the missing information instead of making up details.
 """}]
