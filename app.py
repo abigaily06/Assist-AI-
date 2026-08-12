@@ -15,6 +15,8 @@ import torch
 
 client = InferenceClient("Qwen/Qwen2.5-7B-Instruct", bill_to="kode-with-klossy")
 
+with open("calendar.html", "r", encoding="utf-8") as file:
+        calendar_html = file.read()
 
 with open("assist_ai_database1.txt", "r", encoding="utf-8") as file:
     assist_ai_database1_text = file.read()
@@ -205,6 +207,12 @@ with gr.Blocks() as dashboard:
                 )
             
             gr.Markdown("## Pomodoro Timer")
+
+            
+        with gr.Column():
+            gr.Markdown("### Calendar View Mode")
+            # 2. Pass the file contents directly into the HTML component
+            gr.HTML(calendar_html)
 
 dashboard.launch()
 
