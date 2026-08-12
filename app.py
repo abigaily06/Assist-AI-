@@ -208,7 +208,7 @@ with gr.Blocks() as dashboard:
             
             gr.Markdown("## Pomodoro Timer")
             # We can change the design of the timer. This is just here temporarily.
-            gr.HTML("""<iframe src="https://widgets.commoninja.com/iframe/8318698e-d3c1-4004-b137-3d3e750b45ee" width="100%" height="500" frameborder="0" scrolling="no"></iframe>""")
+            gr.HTML("""<iframe src="https://widgets.commoninja.com/iframe/8318698e-d3c1-4004-b137-3d3e750b45ee" width="100%" height="500" frameborder="0" scrolling="no" style="transform: scale(0.8)"></iframe>""")
             
         with gr.Column():
             gr.Markdown("## Calendar View Mode")
