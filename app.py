@@ -214,7 +214,7 @@ with gr.Blocks() as dashboard:
             # 2. Pass the file contents directly into the HTML component
             gr.HTML(calendar_html)
 
-dashboard.launch()
+dashboard.launch(theme=gr.themes.Soft())
 
 
 # TODO: This is just a starting point! Customize the system prompt,!
