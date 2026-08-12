@@ -128,6 +128,26 @@ Use the following relevant information retrieved from the study database: {study
 
     return response.choices[0].message.content.strip()
 
+# Adds a new task to the task list
+def add_new_task(task, current_tasks):
+    if not task or task.strip() == "":
+        return current_tasks, ""
+
+    current_tasks.append({"text": task.strip(), "completed": False})
+    return current_tasks, ""
+
+# Removes a task when its checkbox is checked
+def update_task(task_text, completed, current_tasks):
+    if completed:
+        new_tasks = []
+
+        for task in current_tasks:
+            if task["text"] != task_text:
+                new_tasks.append(task)
+        return new_tasks
+
+    return current_tasks
+
 with gr.Blocks() as dashboard:
 
     gr.Markdown("# Good morning, Scholar!")
@@ -138,7 +158,52 @@ with gr.Blocks() as dashboard:
             chatbot = gr.ChatInterface(respond)
 
         with gr.Column():
-            gr.Markdown("## Today's Schedule")
+            gr.Markdown("## Today's Tasks")
+
+            with gr.Group():
+
+                # Stores all tasks
+                tasks = gr.State([])
+    
+                # Display tasks
+                @gr.render(inputs=tasks)
+                def render_tasks(current_tasks):
+    
+                    for task in current_tasks:
+                        checkbox = gr.Checkbox(
+                            label = task["text"],
+                            value=task["completed"]
+                        )
+                        # Removes the task when it is checked
+                        checkbox.change(
+                            update_task,
+                            inputs=[
+                                gr.State(task["text"]),
+                                checkbox,
+                                tasks
+                            ],
+                            outputs=tasks
+                        )
+                
+                #Input for a new task
+                with gr.Row(elem_id="task-input-row"):
+                    task_input = gr.Textbox(show_label = False, placeholder="Add a task...", scale = 4, elem_id = "task-input")
+                    add_task = gr.Button("+", scale = 0, elem_id = "add-task-button")
+                
+                # Add task when button is clicked
+                add_task.click(
+                    add_new_task,
+                    inputs=[task_input, tasks],
+                    outputs=[tasks, task_input]
+                )
+
+                # Add task when Enter is pressed
+                task_input.submit(
+                    add_new_task,
+                    inputs=[task_input, tasks],
+                    outputs=[tasks, task_input]
+                )
+            
             gr.Markdown("## Pomodoro Timer")
 
 dashboard.launch()
