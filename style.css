@@ -2,3 +2,7 @@
   height: 60px;
   width: 60px;
 }
+
+#calendar-container {
+  border-radius: 16px;
+}
