@@ -5,4 +5,5 @@
 
 #calendar-container {
   border-radius: 16px;
+  overflow: hidden;
 }
