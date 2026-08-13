@@ -180,6 +180,8 @@ with gr.Blocks(css=custom_css) as dashboard:
     gr.Markdown("# Good morning, Scholar!")
     gr.Markdown("Let's make today productive.")
 
+    tasks = gr.State([])
+
     with gr.Row():
        with gr.Column():
             gr.Markdown("### Assistant")
@@ -197,22 +199,16 @@ with gr.Blocks(css=custom_css) as dashboard:
                 outputs=[msg, chatbot, tasks] 
             )
 
-        with gr.Column():
-            gr.Markdown("## Today's Tasks")
-
-            with gr.Group():
-
-                # Stores all tasks
-                tasks = gr.State([])
+    with gr.Column():
+        gr.Markdown("## Today's Tasks")
+        with gr.Group():
+            @gr.render(inputs=tasks)
+             def render_tasks(current_tasks):
     
-                # Display tasks
-                @gr.render(inputs=tasks)
-                def render_tasks(current_tasks):
-    
-                    for task in current_tasks:
-                        checkbox = gr.Checkbox(
-                            label = task["text"],
-                            value=task["completed"]
+                 for task in current_tasks:
+                     checkbox = gr.Checkbox(
+                        label = task["text"],
+                        value=task["completed"]
                         )
                         # Removes the task when it is checked
                         checkbox.change(
