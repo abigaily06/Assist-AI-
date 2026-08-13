@@ -292,7 +292,7 @@ with gr.Blocks() as dashboard:
         # COLUMN 3: Calendar
         with gr.Column():
             gr.Markdown("## Calendar View Mode")
-            gr.HTML(calendar_html)
+            gr.HTML(calendar_html, elem_id="calendar-container")
 
 
 # Launch dashboard
