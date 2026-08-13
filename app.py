@@ -128,7 +128,7 @@ Use the following relevant information retrieved from the study database: {study
 
     response = client.chat_completion(
         messages,
-        max_tokens=100,
+        max_tokens=500,
         temperature=1.3
     )
 
@@ -181,8 +181,21 @@ with gr.Blocks(css=custom_css) as dashboard:
     gr.Markdown("Let's make today productive.")
 
     with gr.Row():
-        with gr.Column():
-            chatbot = gr.ChatInterface(respond)
+       with gr.Column():
+            gr.Markdown("### Assistant")
+            
+            # 1. Create the chatbot and textbox manually
+            chatbot = gr.Chatbot(type="messages")
+            msg = gr.Textbox(placeholder="Tell me your tasks...", show_label=False)
+            
+            # 2. Tell the textbox exactly what to do when the user presses Enter
+            msg.submit(
+                fn=respond,
+                # We explicitly pass in the message, the chat history, AND the tasks
+                inputs=[msg, chatbot, tasks], 
+                # We expect back a cleared textbox, updated history, AND updated tasks
+                outputs=[msg, chatbot, tasks] 
+            )
 
         with gr.Column():
             gr.Markdown("## Today's Tasks")
