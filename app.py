@@ -20,7 +20,7 @@ except FileNotFoundError:
     assist_ai_database1_text = ""
 
 try:
-    with open("style.css", "r") as file:
+    with open("style.css", "r", encoding="utf-8") as file:
         custom_css = file.read()
 except FileNotFoundError:
     custom_css = ""
@@ -70,7 +70,6 @@ def get_top_chunks(query, chunk_embeddings, text_chunks):
         top_chunks.append(chunk)
     return top_chunks
 
-# 3. Main Chatbot Logic
 def respond(message, history, current_tasks):
     top_results = get_top_chunks(
         message,
@@ -104,11 +103,9 @@ When a user mentions a new assignment, you must add it to their list by typing t
 Use the following relevant information retrieved from the study database: {study_context} Use the database information as guidance when creating your response. Do not mention the database, RAG, embeddings, or retrieved chunks to the student. If you do not yet have enough information to create a useful schedule, continue asking the student for the missing information instead of making up details.
 """}]
 
-    # Translate Gradio's history (pairs) into Hugging Face's format (dictionaries)
+    # 1. Extend the messages list with the Gradio history dictionaries
     if history:
-        for user_msg, bot_msg in history:
-            messages.append({"role": "user", "content": user_msg})
-            messages.append({"role": "assistant", "content": bot_msg})
+        messages.extend(history)
             
     messages.append({"role": "user", "content": message})
     
@@ -120,23 +117,23 @@ Use the following relevant information retrieved from the study database: {study
     
     ai_response = response.choices[0].message.content.strip()
     
-    # Check for the secret task code
+    # Process the secret code IF it exists
     if "[ADD_TASK]" in ai_response:
         parts = ai_response.split("[ADD_TASK]")
         task_name = parts[1].strip()
         
-        # Update the task list state
         current_tasks.append({"text": task_name, "completed": False})
         
-        # Clean up the output so the user doesn't see the code
+        # Cleanup securely inside the if statement block
         ai_response = parts[0].strip() + f"\n\n*(Added '{task_name}' to your task list!)*"
         
-    # Add the newest conversation pair to the history
-    history.append([message, ai_response])
+    # 2. Save the history using ONLY the dictionary format required by Gradio 5+
+    history.append({"role": "user", "content": message})
+    history.append({"role": "assistant", "content": ai_response})
     
     return "", history, current_tasks
 
-# 4. Task Management Functions
+# Task Management Functions
 def add_new_task(task, current_tasks):
     if not task or task.strip() == "":
         return current_tasks, ""
@@ -152,7 +149,7 @@ def update_task(task_text, completed, current_tasks):
         return new_tasks
     return current_tasks
 
-# 5. Interface Layout
+# Interface Layout
 with gr.Blocks() as dashboard:
     gr.Markdown("# Good morning, Scholar!")
     gr.Markdown("Let's make today productive.")
@@ -164,7 +161,8 @@ with gr.Blocks() as dashboard:
         # COLUMN 1: Chatbot
         with gr.Column():
             gr.Markdown("### Assistant")
-            chatbot = gr.Chatbot()
+            # Using type="messages" to match the new history format
+            chatbot = gr.Chatbot(type="messages") 
             msg = gr.Textbox(placeholder="Tell me your tasks...", show_label=False)
             
             msg.submit(
@@ -217,5 +215,5 @@ with gr.Blocks() as dashboard:
             gr.Markdown("## Calendar View Mode")
             gr.HTML(calendar_html)
 
-# Pass custom CSS at the launch level!
+# Pass custom CSS at the launch level to prevent warnings
 dashboard.launch(theme=gr.themes.Soft(), css=custom_css)
