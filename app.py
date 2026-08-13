@@ -59,8 +59,7 @@ def get_top_chunks(query, chunk_embeddings, text_chunks):
     chunk_embeddings_normalized = chunk_embeddings / chunk_embeddings.norm(dim=1, keepdim=True)
     
     similarities = torch.matmul(chunk_embeddings_normalized, query_embedding_normalized) 
-    
-    # Ensure we don't try to get more chunks than exist
+
     k_val = min(3, len(text_chunks))
     top_indices = torch.topk(similarities, k=k_val).indices
     
@@ -126,12 +125,23 @@ Use the following relevant information retrieved from the study database: {study
     # Process the secret code IF it exists
     if "[ADD_TASK]" in ai_response:
         parts = ai_response.split("[ADD_TASK]")
-        task_name = parts[1].strip()
         
-        current_tasks.append({"text": task_name, "completed": False})
+        # 1. Take everything after the secret code and split it by new lines
+        after_trigger = parts[1].strip()
+        lines = after_trigger.split("\n")
         
-        ai_response = parts[0].strip() + f"\n\n*(Added '{task_name}' to your task list!)*"
+        # 2. The task name is ONLY the first line
+        task_name = lines[0].strip()
         
+        # 3. The rest of the AI's question is everything else combined back together
+        rest_of_message = "\n".join(lines[1:]).strip()
+        
+        # Add the task to the list (using the + method for Gradio state!)
+        current_tasks = current_tasks + [{"text": task_name, "completed": False}]
+        
+        # Format the final visible message to include the prefix, the success text, and the suffix!
+        ai_response = parts[0].strip() + f"\n\n*(Added '{task_name}' to your task list!)*\n\n{rest_of_message}".strip()
+
     # 2. Save the history using ONLY the dictionary format required by Gradio 5+
     history.append({"role": "user", "content": message})
     history.append({"role": "assistant", "content": ai_response})
