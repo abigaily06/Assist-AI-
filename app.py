@@ -161,8 +161,7 @@ with gr.Blocks() as dashboard:
         # COLUMN 1: Chatbot
         with gr.Column():
             gr.Markdown("### Assistant")
-            # Using type="messages" to match the new history format
-            chatbot = gr.Chatbot(type="messages") 
+            chatbot = gr.Chatbot() 
             msg = gr.Textbox(placeholder="Tell me your tasks...", show_label=False)
             
             msg.submit(
