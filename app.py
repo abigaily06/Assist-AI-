@@ -83,7 +83,7 @@ def get_top_chunks(query, chunk_embeddings, text_chunks):
 
 
 
-def respond(message, history):
+def respond(message, history, current_tasks):
 
     top_results = get_top_chunks(
         message,
@@ -117,6 +117,7 @@ When creating the schedule:
 - Make the schedule clear and easy to follow
 - Be sure to use relevant characters fetched from the database, if user query is in english, maintain usage of english language. 
 
+When a user mentions a new assignment, you must add it to their list by typing the secret code [ADD_TASK] followed exactly by the task name. For example: 'I can help with that! [ADD_TASK] Finish Math Worksheet'. Do not use the secret code unless you are adding a task.
 Use the following relevant information retrieved from the study database: {study_context} Use the database information as guidance when creating your response. Do not mention the database, RAG, embeddings, or retrieved chunks to the student. If you do not yet have enough information to create a useful schedule, continue asking the student for the missing information instead of making up details.
 """}]
 
@@ -131,7 +132,28 @@ Use the following relevant information retrieved from the study database: {study
         temperature=1.3
     )
 
-    return response.choices[0].message.content.strip()
+    ai_response = response.choices[0].message.content.strip()
+    
+    #Look for add_tasks 
+    if "[ADD_TASK]" in ai_response:
+        # Split the text into two pieces right where the code word is
+        parts = ai_response.split("[ADD_TASK]")
+        
+        # The task name will be whatever the AI wrote after the code word
+        task_name = parts[1].strip()
+        
+        # Add the new task to the Gradio State list!
+        current_tasks.append({"text": task_name, "completed": False})
+        
+        # Clean up the message to hide the code word from the user
+        ai_response = parts[0].strip() + f"\n\n*(Added '{task_name}' to your task list!)*"
+        
+    # 3. Format the history for Gradio
+    history.append({"role": "user", "content": message})
+    history.append({"role": "assistant", "content": ai_response})
+    
+    # Return the cleared textbox, the updated chat history, and the new task list
+    return "", history, current_tasks
 
 # Adds a new task to the task list
 def add_new_task(task, current_tasks):
