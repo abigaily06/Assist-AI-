@@ -168,27 +168,61 @@ def update_task(task_text, completed, current_tasks):
 with gr.Blocks() as dashboard:
     gr.Markdown("# Good morning, Scholar!")
     gr.Markdown("Let's make today productive.")
-    
+
     # Global state for tasks
     tasks = gr.State([])
-    
+
     with gr.Row():
+
         # COLUMN 1: Chatbot
         with gr.Column():
             gr.Markdown("### Assistant")
-            chatbot = gr.Chatbot() 
-            msg = gr.Textbox(placeholder="Tell me your tasks...", show_label=False)
-            
+
+            chatbot = gr.Chatbot()
+
+            # Exemplar prompt buttons
+            with gr.Row():
+                schedule_prompt = gr.Button("Make a schedule")
+                homework_prompt = gr.Button("Homework help")
+                exam_prompt = gr.Button("Exam prep")
+
+            # Message box
+            msg = gr.Textbox(
+                placeholder="Tell me your tasks...",
+                show_label=False
+            )
+
+            # Clicking a prompt puts it into the message box
+            schedule_prompt.click(
+                fn=lambda: "Help me create a study schedule",
+                outputs=msg
+            )
+
+            homework_prompt.click(
+                fn=lambda: "Help me organise my homework",
+                outputs=msg
+            )
+
+            exam_prompt.click(
+                fn=lambda: "Help me prepare for an upcoming exam",
+                outputs=msg
+            )
+
+            # Press Enter to send message to AI
             msg.submit(
                 fn=respond,
-                inputs=[msg, chatbot, tasks], 
-                outputs=[msg, chatbot, tasks] 
+                inputs=[msg, chatbot, tasks],
+                outputs=[msg, chatbot, tasks]
             )
-            
+
+
         # COLUMN 2: Tasks & Timer
         with gr.Column():
             gr.Markdown("## Today's Tasks")
+
             with gr.Group():
+
+                # Dynamically display tasks
                 @gr.render(inputs=tasks)
                 def render_tasks(current_tasks):
                     for task in current_tasks:
@@ -196,6 +230,7 @@ with gr.Blocks() as dashboard:
                             label=task["text"],
                             value=task["completed"]
                         )
+
                         checkbox.change(
                             update_task,
                             inputs=[
@@ -205,31 +240,62 @@ with gr.Blocks() as dashboard:
                             ],
                             outputs=tasks
                         )
-                        
+
+                # Task input
                 with gr.Row(elem_id="task-input-row"):
-                    task_input = gr.Textbox(show_label=False, placeholder="Add a task...", scale=4, lines=1, elem_id="task-input")
-                    add_task = gr.Button("+", scale=0, elem_id="add-task-button")
-                    
+                    task_input = gr.Textbox(
+                        show_label=False,
+                        placeholder="Add a task...",
+                        scale=4,
+                        lines=1,
+                        elem_id="task-input"
+                    )
+
+                    add_task = gr.Button(
+                        "+",
+                        scale=0,
+                        elem_id="add-task-button"
+                    )
+
+                # Add task when + is clicked
                 add_task.click(
                     add_new_task,
                     inputs=[task_input, tasks],
                     outputs=[tasks, task_input]
                 )
+
+                # Add task when Enter is pressed
                 task_input.submit(
                     add_new_task,
                     inputs=[task_input, tasks],
                     outputs=[tasks, task_input]
                 )
-                
+
+            # Pomodoro Timer
             gr.Markdown("## Pomodoro Timer")
-            gr.HTML("""<iframe src="https://widgets.commoninja.com/iframe/8318698e-d3c1-4004-b137-3d3e750b45ee" width="200%" height="700" frameborder="0" scrolling="no" style="transform: translateX(-50px) scale(0.6); transform-origin: top left;"></iframe>""")
-            
+
+            gr.HTML(
+                """
+                <iframe
+                    src="https://widgets.commoninja.com/iframe/8318698e-d3c1-4004-b137-3d3e750b45ee"
+                    width="200%"
+                    height="700"
+                    frameborder="0"
+                    scrolling="no"
+                    style="transform: translateX(-50px) scale(0.6);
+                           transform-origin: top left;">
+                </iframe>
+                """
+            )
+
+
         # COLUMN 3: Calendar
         with gr.Column():
             gr.Markdown("## Calendar View Mode")
             gr.HTML(calendar_html)
 
-# Pass custom CSS at the launch level to prevent warnings
+
+# Launch dashboard
 dashboard.launch(
     theme=gr.Theme.from_hub("hmb/vaporwave"),
     css=custom_css
