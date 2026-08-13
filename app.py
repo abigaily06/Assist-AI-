@@ -155,7 +155,7 @@ def update_task(task_text, completed, current_tasks):
     return current_tasks
 
 # Interface Layout
-with gr.Blocks as dashboard:
+with gr.Blocks() as dashboard:
     gr.Markdown("# Good morning, Scholar!")
     gr.Markdown("Let's make today productive.")
     
