@@ -94,7 +94,6 @@ def respond(message, history, current_tasks):
     study_context = "\n".join(top_results)
 
     messages = [{"role": "system", "content": f""" You are a friendly study-planning assistant designed to help students create realistic, personalised study schedules while reducing stress.
-
 First, collect the information you need from the student. Ask about:
 - The subjects they study
 - Their current grade in each subject
@@ -102,11 +101,8 @@ First, collect the information you need from the student. Ask about:
 - The dates of upcoming exams, tests, assignments, or deadlines
 - Their regular commitments, such as school, clubs, sports, work, chores, or appointments
 - When they are normally available to study
-
 Do not ask all of these questions at once. Have a natural conversation with the student and ask short, clear questions.
-
 Once you have enough information, create a personalised study schedule.
-
 When creating the schedule:
 - Prioritise subjects with upcoming deadlines
 - Give more attention to subjects where the student is further from their target grade
@@ -116,7 +112,6 @@ When creating the schedule:
 - Give specific study times and subjects
 - Make the schedule clear and easy to follow
 - Be sure to use relevant characters fetched from the database, if user query is in english, maintain usage of english language. 
-
 When a user mentions a new assignment, you must add it to their list by typing the secret code [ADD_TASK] followed exactly by the task name. For example: 'I can help with that! [ADD_TASK] Finish Math Worksheet'. Do not use the secret code unless you are adding a task.
 Use the following relevant information retrieved from the study database: {study_context} Use the database information as guidance when creating your response. Do not mention the database, RAG, embeddings, or retrieved chunks to the student. If you do not yet have enough information to create a useful schedule, continue asking the student for the missing information instead of making up details.
 """}]
@@ -203,47 +198,47 @@ with gr.Blocks(css=custom_css) as dashboard:
         gr.Markdown("## Today's Tasks")
         with gr.Group():
             @gr.render(inputs=tasks)
-             def render_tasks(current_tasks):
+            def render_tasks(current_tasks):
     
                  for task in current_tasks:
                      checkbox = gr.Checkbox(
                         label = task["text"],
                         value=task["completed"]
                         )
-                        # Removes the task when it is checked
-                        checkbox.change(
-                            update_task,
-                            inputs=[
-                                gr.State(task["text"]),
-                                checkbox,
-                                tasks
-                            ],
-                            outputs=tasks
-                        )
+                     # Removes the task when it is checked
+                     checkbox.change(
+                         update_task,
+                         inputs=[
+                             gr.State(task["text"]),
+                             checkbox,
+                             tasks
+                         ],
+                         outputs=tasks
+                     )
                 
                 #Input for a new task
-                with gr.Row(elem_id="task-input-row"):
+            with gr.Row(elem_id="task-input-row"):
                     task_input = gr.Textbox(show_label = False, placeholder="Add a task...", scale = 4, lines = 1, elem_id = "task-input")
                     add_task = gr.Button("+", scale = 0, elem_id = "add-task-button")
                 
                 # Add task when button is clicked
-                add_task.click(
+            add_task.click(
                     add_new_task,
                     inputs=[task_input, tasks],
                     outputs=[tasks, task_input]
                 )
 
                 # Add task when Enter is pressed
-                task_input.submit(
+            task_input.submit(
                     add_new_task,
                     inputs=[task_input, tasks],
                     outputs=[tasks, task_input]
                 )
-            
-            gr.Markdown("## Pomodoro Timer")
-            # We can change the design of the timer. This is just here temporarily. Make this larger 
-            gr.HTML("""<iframe src="https://widgets.commoninja.com/iframe/8318698e-d3c1-4004-b137-3d3e750b45ee" width="200%" height="700" frameborder="0" scrolling="no" style="transform: translateX(-50px) scale(0.6); transform-origin: top left;"></iframe>""")
-            
+        
+        gr.Markdown("## Pomodoro Timer")
+        # We can change the design of the timer. This is just here temporarily. Make this larger 
+        gr.HTML("""<iframe src="https://widgets.commoninja.com/iframe/8318698e-d3c1-4004-b137-3d3e750b45ee" width="200%" height="700" frameborder="0" scrolling="no" style="transform: translateX(-50px) scale(0.6); transform-origin: top left;"></iframe>""")
+        
         with gr.Column():
             gr.Markdown("## Calendar View Mode")
             # 2. Pass the file contents directly into the HTML component
