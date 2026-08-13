@@ -192,7 +192,7 @@ with gr.Blocks(css=custom_css) as dashboard:
                 
                 #Input for a new task
                 with gr.Row(elem_id="task-input-row"):
-                    task_input = gr.Textbox(show_label = False, placeholder="Add a task...", scale = 4, elem_id = "task-input")
+                    task_input = gr.Textbox(show_label = False, placeholder="Add a task...", scale = 4, lines = 1, elem_id = "task-input")
                     add_task = gr.Button("+", scale = 0, elem_id = "add-task-button")
                 
                 # Add task when button is clicked
