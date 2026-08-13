@@ -22,6 +22,9 @@ with open("assist_ai_database1.txt", "r", encoding="utf-8") as file:
     assist_ai_database1_text = file.read()
 print(assist_ai_database1_text)
 
+with open("style.css", "r") as file:
+    custom_css = file.read()
+
 def preprocess_text(text):
     cleaned_text = text.strip()
     chunks = cleaned_text.split("\n")
@@ -150,7 +153,7 @@ def update_task(task_text, completed, current_tasks):
 
     return current_tasks
 
-with gr.Blocks() as dashboard:
+with gr.Blocks(css=custom_css) as dashboard:
 
     gr.Markdown("# Good morning, Scholar!")
     gr.Markdown("Let's make today productive.")
