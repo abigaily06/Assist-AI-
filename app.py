@@ -155,7 +155,7 @@ def update_task(task_text, completed, current_tasks):
     return current_tasks
 
 # Interface Layout
-with gr.Blocks(theme=gr.Theme.from_hub("hmb/vaporwave")) as dashboard:
+with gr.Blocks as dashboard:
     gr.Markdown("# Good morning, Scholar!")
     gr.Markdown("Let's make today productive.")
     
@@ -220,3 +220,7 @@ with gr.Blocks(theme=gr.Theme.from_hub("hmb/vaporwave")) as dashboard:
             gr.HTML(calendar_html)
 
 # Pass custom CSS at the launch level to prevent warnings
+dashboard.launch(
+    theme=gr.Theme.from_hub("hmb/vaporwave"),
+    css=custom_css
+)
