@@ -194,8 +194,7 @@ with gr.Blocks() as dashboard:
         # COLUMN 1: Chatbot
         with gr.Column():
             gr.Markdown("### Assistant")
-            chatbot = gr.Chatbot(avatar_images=(None, "Untitled design.png")) 
-            msg = gr.Textbox(placeholder="Tell me your tasks...", show_label=False)
+            chatbot = gr.Chatbot(avatar_images=(None, "Untitled design.png"))
             
 
             # Exemplar prompt buttons
