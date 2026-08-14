@@ -181,8 +181,10 @@ def update_task(task_text, completed, current_tasks):
 
 # Interface Layout
 with gr.Blocks() as dashboard:
-    gr.Markdown("# Good morning, Scholar!")
-    gr.Markdown("Let's make today productive.")
+    with gr.Row()
+        gr.Image("Untitled design.png", width=80, show_label=False, show_download_button=False, container=False)
+        gr.Markdown("# Good morning, Scholar!")
+        gr.Markdown("Let's make today productive.")
 
     # Global state for tasks
     tasks = gr.State([])
@@ -192,8 +194,9 @@ with gr.Blocks() as dashboard:
         # COLUMN 1: Chatbot
         with gr.Column():
             gr.Markdown("### Assistant")
-
-            chatbot = gr.Chatbot()
+            chatbot = gr.Chatbot(type="messages", avatar_images=(None, "Untitled design.png")) 
+            msg = gr.Textbox(placeholder="Tell me your tasks...", show_label=False)
+            
 
             # Exemplar prompt buttons
             with gr.Row():
