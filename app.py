@@ -292,7 +292,7 @@ with gr.Blocks() as dashboard:
             gr.HTML(
                 """
                 <iframe
-                    src="https://commoninja.site/1b192435-e435-4d1f-aead-f55ad086f78e"
+                    src="https://widgets.commoninja.com/iframe/d7099aad-af9b-4a30-be44-08e097b41209"
                     width="200%"
                     height="700"
                     frameborder="0"
