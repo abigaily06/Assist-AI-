@@ -183,8 +183,9 @@ def update_task(task_text, completed, current_tasks):
 with gr.Blocks() as dashboard:
     with gr.Row():
         gr.Image("Untitled_design-removebg-preview.png", width=80,height=80, show_label=False, container=False)
-        gr.Markdown("# Good morning, Scholar!")
-        gr.Markdown("Let's make today productive.")
+        with gr.Column():
+            gr.Markdown("# Good morning, Scholar!")
+            gr.Markdown("Let's make today productive.")
 
     # Global state for tasks
     tasks = gr.State([])
