@@ -182,7 +182,7 @@ def update_task(task_text, completed, current_tasks):
 # Interface Layout
 with gr.Blocks() as dashboard:
     with gr.Row():
-        gr.Image("Untitled design.png", width=80, show_label=False, show_download_button=False, container=False)
+        gr.Image("Untitled design.png", width=80, show_label=False, container=False)
         gr.Markdown("# Good morning, Scholar!")
         gr.Markdown("Let's make today productive.")
 
