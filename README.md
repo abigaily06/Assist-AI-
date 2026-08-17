@@ -2,9 +2,9 @@
 
 Assist AI is a website made by students for students, helping them balance their studies around their social life 
 
-🤗 **Originally built as a Hugging Face Space:** [https://huggingface.co/spaces/kode-with-klossy/4.3-groupC1-capstone]
+**Originally built as a Hugging Face Space:** [https://huggingface.co/spaces/kode-with-klossy/4.3-groupC1-capstone]
 
-> ⚠️ Note: This Space is no longer live. The code in this repo is the full project.
+> Note: This Space is no longer live. The code in this repo is the full project.
 
 Screenshot of my chatbot(<img width="1913" height="848" alt="image" src="https://github.com/user-attachments/assets/f3bd9cbd-1b6d-4732-8396-f3e0dc259192" />
 ),
