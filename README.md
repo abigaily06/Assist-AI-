@@ -23,4 +23,4 @@ Our chatbot would identify stress patterns and analyse the user's workload to pr
 ## What I learned
 working with my team on this project within a spam of 3 days I have learnt that mistakes makes us grow stronger and learn more in the long run during this project we have went through so many bugs especially when working on creating a working task list to make it up and running and also an big achievement I would say that was a win for this project was definitely getting through semantic search which took the whole day as there was no pre-existing dataset for study schedules  
 ## About
-Summer 2026, by [Abigail, Anika, Ava, Miya].
+Summer 2026, by Abigail, Anika, Ava, Miya.
