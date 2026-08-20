@@ -6,7 +6,7 @@ Assist AI is a website made by students for students, helping them balance their
 
 > Note: This Space is no longer live. The code in this repo is the full project.
 
-Screenshot of my chatbot(<img width="1913" height="848" alt="image" src="https://github.com/user-attachments/assets/f3bd9cbd-1b6d-4732-8396-f3e0dc259192" />
+Screenshot of our chatbot(<img width="1913" height="848" alt="image" src="https://github.com/user-attachments/assets/f3bd9cbd-1b6d-4732-8396-f3e0dc259192" />
 ),
 ## What does it do?
 Our scheduling website would allow students to put their tasks into the chatbot, and it generates a personalised study schedule working around their workload and life. We hope the user feels studying does not have to be overwhelming yet manageable whilst being on track to their goal
