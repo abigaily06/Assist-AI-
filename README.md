@@ -13,11 +13,11 @@ Our chatbot would identify stress patterns and analyse the user's workload to pr
 
 ## Built with
 
-- **Grado** — Web interface and user interactions 
+- **Gradio** — Web interface and user interactions 
 - **Hugging Face Inference Providers** — the AI model Qwen/Qwen2.5-7B-Instruct
 - **Sentence Transformers** — Embedding and semantic search for study recommendations 
 
 ## What I learned
-Working with my team on this project within a span of 3 days, I have learnt that mistakes make us grow stronger and learn more in the long run. During this project, we went through so many bugs, especially when working on creating a task list to get it up and running. A big achievement I would say that was a win for this project was definitely getting through semantic search, which took the whole day, as there was no pre-existing dataset for study schedules.  
+Working with my team on this project within a span of 3 days, I have learnt that mistakes make us grow stronger and learn more in the long run. During this project, we went through so many bugs, especially when working on creating a task list to get it up and running. A big achievement I would say for this project was definitely getting through semantic search, which took the whole day, as there was no pre-existing dataset for study schedules.  
 ## About
 Summer 2026, by Abigail, Anika, Ava, Miya.
